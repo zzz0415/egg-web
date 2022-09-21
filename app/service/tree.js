@@ -1,5 +1,5 @@
 const Service = require('egg').Service;
-
+// 扁平数据转化为tree
 function arrayToTree(items) {
   const result = [];
   const itemMap = {};
