@@ -9,5 +9,5 @@ module.exports = app => {
   router.get('/api/product', controller.product.list);
   // router.post('/api/product', controller.product.create);
   router.get('/api/home', controller.home.index);
-  router.get('/api/category', controller.tree.category);
+  router.get('/api/category', controller.product.category);
 };
