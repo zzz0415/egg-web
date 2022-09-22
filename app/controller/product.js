@@ -88,5 +88,19 @@ class HomeController extends Controller {
       data: arrToTree(data),
     };
   }
+  async details() {
+    const { ctx } = this;
+    const id = ctx.params;
+    const data = await ctx.service.product.details(id);
+    ctx.body = {
+      code: 1,
+      data: {
+        ...data,
+        promotionInfoList: JSON.parse(data.promotionInfoList),
+        images: JSON.parse(data.images),
+        detail: JSON.parse(data.detail),
+      },
+    };
+  }
 }
 module.exports = HomeController;
