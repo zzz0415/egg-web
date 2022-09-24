@@ -11,4 +11,5 @@ module.exports = app => {
   router.get('/api/home', controller.home.index);
   router.get('/api/category', controller.product.category);
   router.get('/api/product/:id', controller.product.details);
+  router.get('/api/search', controller.product.search);
 };

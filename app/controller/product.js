@@ -102,5 +102,13 @@ class HomeController extends Controller {
       },
     };
   }
+  async search() {
+    const { ctx } = this;
+    const data = await ctx.service.product.search();
+    ctx.body = {
+      code: 1,
+      data,
+    };
+  }
 }
 module.exports = HomeController;

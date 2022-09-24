@@ -20,6 +20,10 @@ class ProductService extends Service {
     const data = await this.app.mysql.get('product', id);
     return data;
   }
+  async search() {
+    const data = await this.app.mysql.select('mull_nav');
+    return data;
+  }
 }
 
 module.exports = ProductService;
