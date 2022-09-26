@@ -19,7 +19,8 @@
     "egg-mock": "^4",
     "egg-mysql": "^3.1.1",
     "eslint": "^8",
-    "eslint-config-egg": "^12"
+    "eslint-config-egg": "^12",
+    "jsonwebtoken": "^8.5.1"
   },
   "engines": {
     "node": ">=16.0.0"
