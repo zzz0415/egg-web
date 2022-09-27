@@ -7,6 +7,7 @@ const whiteList = [
   '/api/search',
   '/api/user',
   '/api/user/login',
+  '/api/user/code',
 ];
 const authority = async (ctx, next) => {
   const reg = /(\S{1,})\?{1}(\S{1,})/;

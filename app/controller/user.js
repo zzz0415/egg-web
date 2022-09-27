@@ -4,29 +4,59 @@ const Controller = require('egg').Controller;
 const jwt = require('jsonwebtoken');
 // const fs = require('fs');
 // const path = require('path');
-
-
+const random = (min, max) => {
+  return Math.round(min + Math.random() * (max - min));
+};
+const randomNumber = len => {
+  let num = '';
+  while (num.length < len) {
+    num += random(0, 9);
+  }
+  return num;
+};
 class UserController extends Controller {
-  async login() {
+  async sendCode() {
     const { ctx } = this;
-    const user = await ctx.service.user.find({
-      account: ctx.request.body.account,
-      password: ctx.request.body.password,
-    });
-    if (Object.keys(user).length >= 1) {
-      const token = jwt.sign({
-        ...user,
-      }, 'zzz123');
+    const { phone } = ctx.query;
+    if (phone && phone.length === 11) {
+      ctx.session.messageCode = randomNumber(6);
       ctx.body = {
         code: 1,
-        token,
-        messsge: '登录成功',
+        messsge: `验证码[${ctx.session.messageCode}]已经发送至手机用户${phone}`,
       };
     } else {
       ctx.throw(422, {
-        code: 1,
-        messsge: '账号密码错误',
+        messsge: '请输入正确的手机号',
       });
+    }
+  }
+  async login() {
+    const { ctx } = this;
+    const { phone, code } = ctx.request.body;
+    if (code !== ctx.session.messageCode) {
+      ctx.throw(422, {
+        code: 1,
+        messsge: '验证码错误',
+      });
+    } else {
+      const user = await ctx.service.user.find({
+        phone,
+      });
+      if (Object.keys(user).length >= 1) {
+        const token = jwt.sign({
+          ...user,
+        }, 'zzz123');
+        ctx.body = {
+          code: 1,
+          token,
+          messsge: '登录成功',
+        };
+      } else {
+        ctx.throw(422, {
+          code: 1,
+          messsge: '用户未注册',
+        });
+      }
     }
   }
   async info() {
